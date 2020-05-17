@@ -27,9 +27,11 @@ public class produitController {
     void UpadteProduit(@RequestBody produit pro){
         produitservice.UpdateProduit(pro);
     }
-    @DeleteMapping("/ref")
-    void deleteProduit(@PathVariable String ref){
-        produitservice.deleteProduit(ref);
+
+    @DeleteMapping("/{id}")
+    void deleteProduit(@PathVariable Long id){
+
+        produitservice.deleteProduit(id);
     }
 
 }

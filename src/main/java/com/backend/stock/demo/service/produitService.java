@@ -8,6 +8,6 @@ public interface produitService {
     List<produit> getProduits();
     void addProduit(produit pro);
     void UpdateProduit(produit pro);
-    void deleteProduit(String ref);
+    void deleteProduit(Long id);
 
 }
