@@ -1,16 +1,21 @@
 package com.backend.stock.demo.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    UserDetailsService userdetailsService;
 
     protected void configure(HttpSecurity http) throws Exception{
         http
@@ -27,7 +32,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
         //String password = passwordEncoder().encode("passcode");
-        auth.inMemoryAuthentication().passwordEncoder(NoOpPasswordEncoder.getInstance()).withUser("user").password("passcode").roles("USER").and().withUser("admin").password("passcode").roles("USER", "ADMIN");
+        auth.userDetailsService(userdetailsService).passwordEncoder(NoOpPasswordEncoder.getInstance());
+
+//        auth.inMemoryAuthentication().passwordEncoder(NoOpPasswordEncoder.getInstance()).withUser("user").password("passcode").roles("USER").and().withUser("admin").password("passcode").roles("USER", "ADMIN");
     }
 
     }
